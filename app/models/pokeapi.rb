@@ -1,11 +1,14 @@
 require "httparty"
 require "pry"
 require "json"
+
 class Pokeapi
 
-	def initialize(name)
+	def initialize(name,pokemon_api)
 
 		@name = name
+		@pokemon_api = pokemon_api
+
 	end
 
 	# This method selects the Pokemon's species url
@@ -13,8 +16,8 @@ class Pokeapi
 	# pokemon = the request using the Pokemon's name from the API
 	#
 	# RETURNS STRING ("URL")
-	def Pokeapi.species_url()
-		@pokemon = @name["species"]["url"]
+	def species_url()
+		return @pokemon_api["species"]["url"]
 	end
 
 	# This method finds the evolution chain url
@@ -22,7 +25,7 @@ class Pokeapi
 	# species = the request for Pokemon species information from API
 	#
 	# RETURNS A STRING (URL)
-	def Pokeapi.evolution_url(species)
+	def evolution_url(species)
 		species["evolution_chain"]["url"]
 	end
 
@@ -31,7 +34,7 @@ class Pokeapi
 	# species = the request for Pokemon species information from API
 	#
 	# RETURNS A STRING ('INTEGER')
-	def Pokeapi.evolution_id(species)
+	def evolution_id(species)
 		species2 = species.split("n/")
 		id = species2[1].split("/")
 		return id.join('')
@@ -42,8 +45,8 @@ class Pokeapi
 	# pokemon = the request using the Pokemon's name from the API
 	#
 	# RETURNS FIXNUM (INTEGER)
-	def Pokeapi.id()
-		pokemon["id"]
+	def id()
+		return @pokemon_api["id"]
 	end
 
 	# This method adds the names of a Pokemon's abilities to an Array
@@ -51,7 +54,7 @@ class Pokeapi
 	# pokemon = the request using the Pokemon's name from the API
 	#
 	# RETURNS ARRAY
-	def Pokeapi.ability_names(pokemon)
+	def ability_names(pokemon)
 		ability_names = []
 		pokemon["abilities"].each do |i|
 			ability_names.push(i["ability"]["name"])
@@ -66,16 +69,16 @@ class Pokeapi
 	# pokemon = the API request information for the Pokemon
 	#
 	# RETURNS ARRAY
-	def Pokeapi.types(pokemon)
+	def types(pokemon)
 		pokemon_types = []
-		pokemon["types"].each do |i|
+		@pokemon_api["types"].each do |i|
 			pokemon_types.push(i["type"]["name"].capitalize)
 		end
 		return pokemon_types
 	end
 
-	# types_array = Pokeapi.types(pokemon)
-	# def Pokeapi.types_length(types_array)
+	# types_array = types(pokemon)
+	# def types_length(types_array)
 	# 	if types_array[1] == 1
 	# 		types_array[1] == ""
 	# 	end
@@ -86,8 +89,8 @@ class Pokeapi
 	# pokemon = the request using the Pokemon's name from the API
 	#
 	# RETURNS STRING ("INTEGER")
-	def Pokeapi.height(pokemon)
-		pokemon["height"]
+	def height(pokemon)
+		@pokemon_api["height"]
 	end
 
 	# This method selects the Pokemon's weight
@@ -95,8 +98,8 @@ class Pokeapi
 	# pokemon = the request using the Pokemon's name from the API
 	#
 	# RETURNS STRING ("INTEGER")
-	def Pokeapi.weight(pokemon)
-		pokemon["weight"]
+	def weight(pokemon)
+		@pokemon_api["weight"]
 	end
 
 
@@ -106,7 +109,7 @@ class Pokeapi
 	#
 	# RETURNS ARRAY with String Elements 
 
-	def Pokeapi.api_evolution_array(pokemon_info)
+	def api_evolution_array(pokemon_info)
 
 
 		# firstevolution = pokemon_info["chain"]["species"]["name"]
@@ -157,7 +160,7 @@ class Pokeapi
 	# all_pokemon = Pokedex.pokedex_all_records(file)
 	#
 	# RETURNS A HASH
-	def Pokeapi.evolution_hash(all_pokemon)
+	def evolution_hash(all_pokemon)
 		evolutions_hash = {}	
 
 			evolutions_hash["stage1"] = all_pokemon[7]
@@ -168,10 +171,10 @@ class Pokeapi
 
 	# This method adds types to a Hash for API storage
 	# 
-	# types_array = Pokeapi.types(pokemon)
+	# types_array = types(pokemon)
 	#
 	# RETURNS A HASH
-	def Pokeapi.types_hash(types_array)
+	def types_hash(types_array)
 		types_hash = {}
 			types_hash["type1"] = types_array[0]
 			types_hash["type2"] = types_array[1]
@@ -181,15 +184,15 @@ class Pokeapi
 
 	# This method takes the sorted data taken from the API request and puts it into a Hash
 	#
-	# types_hash = Pokeapi.types_hash(types_array)
-	# evolutions_hash = Pokeapi.evolution_hash(evolution_array)
-	# ability_hash = Pokeapi.ability_hash(abilities_array)
-	# height = Pokeapi.height(pokemon)
-	# weight = Pokeapi.weight(pokemon)
+	# types_hash = types_hash(types_array)
+	# evolutions_hash = evolution_hash(evolution_array)
+	# ability_hash = ability_hash(abilities_array)
+	# height = height(pokemon)
+	# weight = weight(pokemon)
 	# name = params[:name]
 	#
 	# RETURNS A HASH
-	def Pokeapi.api_data_hash(name, height, weight, ability_hash, types_hash, evolutions_hash)
+	def api_data_hash(name, height, weight, ability_hash, types_hash, evolutions_hash)
 		data_hash = {}
 		
 			data_hash["name"] = name

@@ -18,35 +18,35 @@ require 'active_support/all'
 	#Checks if gender exist. If gender exist means that view page is coming from add pokemon page
 	#and will need to save record and display the info. 	
 	if params[:gender].present? != false
-
-	@pokeapi = Pokeapi.new(@name)
-	@pokemon = HTTParty.get("http://pokeapi.co/api/v2/pokemon/#{@name}")
+	
+	@pokemon_api = HTTParty.get("http://pokeapi.co/api/v2/pokemon/#{@name}")
+	@pokeapi = Pokeapi.new(@name,@pokemon_api)
+	
 	# Assign the Pokemon's ID taken from the @pokemon request
 	@pokemon_id = @pokeapi.id()
 
-
 	# Assign the species URL taken from @pokemon request (needed to find the correct evolution ID)
-	@species_url = @pokeapi.Pokeapi.species_url()
+	@species_url = @pokeapi.species_url()
 	# Use the newly found species URL to make another API request
 	@species = HTTParty.get(@species_url)
 	# Extract the evolution URL from the data in @species
-	@evolution_url = @pokeapi.Pokeapi.evolution_url(@species)
-	# Select only the evolution ID number from the evolution URL!
-	@evolution_id = @pokeapi.Pokeapi.evolution_id(@evolution_url)
-	# Finally use the evolution ID to get the information about the Pokemon's evolution chain
-	@evolutions = HTTParty.get("http://pokeapi.co/api/v2/evolution-chain/#{@evolution_id}")
-	@evolution_array = @pokeapi.Pokeapi.api_evolution_array(@evolutions)
+	# @evolution_url = @pokeapi.evolution_url(@species)
+	# # Select only the evolution ID number from the evolution URL!
+	# @evolution_id = @pokeapi.evolution_id(@evolution_url)
+	# # Finally use the evolution ID to get the information about the Pokemon's evolution chain
+	# @evolutions = HTTParty.get("http://pokeapi.co/api/v2/evolution-chain/#{@evolution_id}")
+	# @evolution_array = @pokeapi.api_evolution_array(@evolutions)
 
 
 
-	@stage1 = @evolution_array[0].capitalize
-	@stage2 = @evolution_array[1].capitalize
-	@stage3 = @evolution_array[2].capitalize
+	# @stage1 = @evolution_array[0].capitalize
+	# @stage2 = @evolution_array[1].capitalize
+	# @stage3 = @evolution_array[2].capitalize
 
-	@height = Pokeapi.height(@pokemon)
-	@weight = Pokeapi.weight(@pokemon)
+	@height = @pokeapi.height(@pokemon)
+	@weight = @pokeapi.weight(@pokemon)
 
-	@type_array = Pokeapi.types(@pokemon)
+	@type_array = @pokeapi.types(@pokemon)
 
 
 	@new_pokemonarray = []
@@ -57,9 +57,9 @@ require 'active_support/all'
 	@new_pokemonarray << @cp
 	@new_pokemonarray << @hp
 	@new_pokemonarray << @favorite
-	@new_pokemonarray << @stage1
-	@new_pokemonarray << @stage2
-	@new_pokemonarray << @stage3
+	# @new_pokemonarray << @stage1
+	# @new_pokemonarray << @stage2
+	# @new_pokemonarray << @stage3
 
 	# @types_array = Pokeapi.types_length(@types_array)
 	# If pokemon have multiple types save to array and type variable. 
