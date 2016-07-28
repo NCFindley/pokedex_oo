@@ -17,7 +17,8 @@ class Pokeapi
 	#
 	# RETURNS STRING ("URL")
 	def species_url()
-		return @pokemon_api["species"]["url"]
+		@species = @pokemon_api["species"]["url"]
+		return @species
 	end
 
 	# This method finds the evolution chain url
@@ -25,8 +26,9 @@ class Pokeapi
 	# species = the request for Pokemon species information from API
 	#
 	# RETURNS A STRING (URL)
-	def evolution_url(species)
-		species["evolution_chain"]["url"]
+	def evolution_url()
+		@evolution_url = @species["evolution_chain"]["url"]
+		return @evolution_url
 	end
 
 	# This method selects the evolution chain id number from the evolution url
@@ -34,8 +36,8 @@ class Pokeapi
 	# species = the request for Pokemon species information from API
 	#
 	# RETURNS A STRING ('INTEGER')
-	def evolution_id(species)
-		species2 = species.split("n/")
+	def evolution_id()
+		species2 = @evolution_url.split("n/")
 		id = species2[1].split("/")
 		return id.join('')
 	end
@@ -69,12 +71,12 @@ class Pokeapi
 	# pokemon = the API request information for the Pokemon
 	#
 	# RETURNS ARRAY
-	def types(pokemon)
+	def types()
 		pokemon_types = []
 		@pokemon_api["types"].each do |i|
 			pokemon_types.push(i["type"]["name"].capitalize)
 		end
-		return pokemon_types
+		return @pokemon_types
 	end
 
 	# types_array = types(pokemon)
@@ -89,7 +91,7 @@ class Pokeapi
 	# pokemon = the request using the Pokemon's name from the API
 	#
 	# RETURNS STRING ("INTEGER")
-	def height(pokemon)
+	def height()
 		@pokemon_api["height"]
 	end
 
@@ -98,7 +100,7 @@ class Pokeapi
 	# pokemon = the request using the Pokemon's name from the API
 	#
 	# RETURNS STRING ("INTEGER")
-	def weight(pokemon)
+	def weight()
 		@pokemon_api["weight"]
 	end
 
@@ -206,3 +208,27 @@ class Pokeapi
 	end
 
 end
+
+@name = "charizard"
+		@pokemon_api = HTTParty.get("http://pokeapi.co/api/v2/pokemon/#{@name}")
+		@pokeapi = Pokeapi.new(@name,@pokemon_api)
+		
+		# Assign the Pokemon's ID taken from the @pokemon request
+		@pokemon_id = @pokeapi.id()
+
+		# Assign the species URL taken from @pokemon request (needed to find the correct evolution ID)
+		@species_url = @pokeapi.species_url()
+		# Use the newly found species URL to make another API request
+		@species = HTTParty.get(@species_url)
+		# Extract the evolution URL from the data in @species
+		binding.pry
+		@evolution_url = @pokeapi.evolution_url()
+		puts @evolution_url
+		# Select only the evolution ID number from the evolution URL!
+		@evolution_id = @pokeapi.evolution_id()
+		# Finally use the evolution ID to get the information about the Pokemon's evolution chain
+		@evolutions = HTTParty.get("http://pokeapi.co/api/v2/evolution-chain/#{@evolution_id}")
+		
+		@evolution_array = @pokeapi.api_evolution_array(@evolutions)
+
+

@@ -57,6 +57,16 @@ class Pokedex
 
 end
 
+class PokedexEvolution < Pokedex
+
+	
+
+
+
+
+end
+
+
 class PokedexFind < Pokedex
 
 
