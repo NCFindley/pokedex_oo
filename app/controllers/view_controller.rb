@@ -72,9 +72,11 @@ require 'active_support/all'
 		end
 
 		@pokedex = Pokedex.new(@file)
-		@pokedex_array = @pokedex.pokedex_all_records()
-		# @pokedex.delete_record(@name)
-		# @pokedex.save_record(@new_pokemonarray)
+		@pokedex.pokedex_all_records()
+		@pokedex.delete_record(@name)
+		@pokedex.save_record(@new_pokemonarray)
 	end
+
+	erb :"pokedex/view"
 
 end
