@@ -1,7 +1,7 @@
 require "httparty"
 require "pry"
 require "json"
-
+require 'csv'
 
 
 class Pokedex
@@ -9,6 +9,7 @@ class Pokedex
 	def initialize(file)
 
 		@file = file
+
 	end
 
 
@@ -17,8 +18,8 @@ class Pokedex
 	# new_pokemon is an array of traits for individual pokemon
 	#
 	# SAVES DATA TO FILE
-	def Pokedex.save_record(new_pokemon)
-		require 'csv'
+	def save_record(new_pokemon)
+		
 
 		CSV.open(@file, "a") do |csv|
 
@@ -26,18 +27,32 @@ class Pokedex
 		end
 	end
 
-	def Pokedex.pokedex_all_records()
-		require 'csv'
+	def pokedex_all_records()
+		
 		# Array to add all Pokemon to
 		@pokemon_array = []
 		# Assign the file name to a variable
 		# For each line (Array) in the Pokedex file
-		CSV.foreach(file) do |record|
+		CSV.foreach(@file) do |record|
 			# Add each one to the empty Array
 			 @pokemon_array.push(record)
 		end
 		# Return Array containing all of the Pokemon from the Pokedex
 		return @pokemon_array
+	end
+
+	def delete_record(name_pokemon)
+
+	
+		CSV.open(@file, "w") do |csv|
+
+			@pokemon_array.each do |record |
+
+				if record[0] != name_pokemon.capitalize
+					csv << record
+				end
+			end
+		end	
 	end
 
 end
