@@ -78,7 +78,7 @@ require 'active_support/all'
 
 
 		@pokedex = Pokedex.new(@file)
-		@pokedex.pokedex_all_records()
+		@all_pokemon = @pokedex.pokedex_all_records()
 		@pokedexFind = PokedexFind.new(@file,@all_pokemon)
 		
 		@found_array = @pokedexFind.find_record(@name)
@@ -96,7 +96,7 @@ require 'active_support/all'
 			@stage1 = @found_array[7]
 			@stage2 = @found_array[8]
 			@stage3 = @found_array[9]
-			@type = @pokedex.display_type(@found_array)
+			@type = @pokedexFind.display_type(@found_array)
 	
 		else
 			@name = "No Pokemon Found"
