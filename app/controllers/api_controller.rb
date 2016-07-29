@@ -22,7 +22,7 @@ MyApp.get "/api/all_pokemon" do
 	@pokedex = Pokedex.new(@file)
 	@all_records = @pokedex.all_records()
 	@internalApi = InternalAPI.new(@all_records)
-	@all_hash = @internalApi.change_the_arrays()
+	@all = @internalApi.change_the_arrays()
 
 	return @all.to_json
 
