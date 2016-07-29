@@ -22,7 +22,7 @@ MyApp.get "/" do
 	@stage1 = @random_favorite[7]
 	@stage2 = @random_favorite[8]
 	@stage3 = @random_favorite[9]
-	@type = Pokedex.pokedex_display_type(@random_favorite)
+	@type = @pokedexFind.display_type(@random_favorite)
 
 	if @favorite == "on"
 		@favorite = "yes"

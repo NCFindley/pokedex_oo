@@ -135,7 +135,21 @@ class PokedexFind < Pokedex
 		return random_favorite
 	end
 
+	def display_type(found_array)
 
+		x = 11
+		type = found_array[10]
+			
+			while x < found_array.length
+
+				type = type + "," + found_array[x]
+
+				x +=1
+			end
+
+			return type
+
+	end
 
 	# This method adds saved data to hashes to be displayed as JSON
 	#
