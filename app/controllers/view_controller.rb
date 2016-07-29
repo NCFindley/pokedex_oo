@@ -30,23 +30,21 @@ require 'active_support/all'
 		# Use the newly found species URL to make another API request
 		@species = HTTParty.get(@species_url)
 		# Extract the evolution URL from the data in @species
-		# @evolution_url = @pokeapi.evolution_url(@species)
-		# # Select only the evolution ID number from the evolution URL!
-		# @evolution_id = @pokeapi.evolution_id(@evolution_url)
-		# # Finally use the evolution ID to get the information about the Pokemon's evolution chain
-		# @evolutions = HTTParty.get("http://pokeapi.co/api/v2/evolution-chain/#{@evolution_id}")
-		# @evolution_array = @pokeapi.api_evolution_array(@evolutions)
+		@evolution_url = @pokeapi.evolution_url(@species)
+		# Select only the evolution ID number from the evolution URL!
+		@evolution_id = @pokeapi.evolution_id()
+		# Finally use the evolution ID to get the information about the Pokemon's evolution chain
+		@evolutions = HTTParty.get("http://pokeapi.co/api/v2/evolution-chain/#{@evolution_id}")
+		@evolution_array = @pokeapi.api_evolution_array(@evolutions)
 
+		@stage1 = @evolution_array[0].capitalize
+		@stage2 = @evolution_array[1].capitalize
+		@stage3 = @evolution_array[2].capitalize
 
+		@height = @pokeapi.height()
+		@weight = @pokeapi.weight()
 
-		# @stage1 = @evolution_array[0].capitalize
-		# @stage2 = @evolution_array[1].capitalize
-		# @stage3 = @evolution_array[2].capitalize
-
-		@height = @pokeapi.height(@pokemon)
-		@weight = @pokeapi.weight(@pokemon)
-
-		@type_array = @pokeapi.types(@pokemon)
+		@type_array = @pokeapi.types()
 
 
 		@new_pokemonarray = []
@@ -57,12 +55,13 @@ require 'active_support/all'
 		@new_pokemonarray << @cp
 		@new_pokemonarray << @hp
 		@new_pokemonarray << @favorite
-		# @new_pokemonarray << @stage1
-		# @new_pokemonarray << @stage2
-		# @new_pokemonarray << @stage3
+		@new_pokemonarray << @stage1
+		@new_pokemonarray << @stage2
+		@new_pokemonarray << @stage3 
 
 		# @types_array = Pokeapi.types_length(@types_array)
-		# If pokemon have multiple types save to array and type variable. 
+		# If pokemon have multiple types save to array and type variable.
+	
 		@type_array.each do |record|
 
 			@new_pokemonarray << record
@@ -70,7 +69,6 @@ require 'active_support/all'
 			@type = @type + " " + record
 
 		end
-
 		@pokedex = Pokedex.new(@file)
 		@pokedex.pokedex_all_records()
 		@pokedex.delete_record(@name)

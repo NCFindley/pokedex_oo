@@ -57,22 +57,19 @@ class Pokedex
 
 end
 
-class PokedexEvolution < Pokedex
-
-	
-
-
-
-
-end
-
-
 class PokedexFind < Pokedex
 
+	def initialize(file,all_records)
 
-	def Pokedex.pokedex_find_record(name_pokemon,pokedex_array)
+		@file = file
+		@all_records = all_records
 
-		pokedex_array.each do |record|
+	end
+
+	def pokedex_find_record(name_pokemon)
+
+
+		@all_records.each do |record|
 			
 			if name_pokemon.capitalize == record[0]
 				return record
@@ -89,10 +86,10 @@ class PokedexFind < Pokedex
 	# pokemon_array represents all Pokemon in the Pokedex
 	#
 	# RETURNS ARRAY
-	def Pokedex.pokedex_find_by_trait(pokemon_array, search_input)
+	def Pokedex.pokedex_find_by_trait(search_input)
 		results_array = []
 		# Iterate over each of the Pokemon in the Pokedex
-		pokemon_array.each do |pokemon|
+		@all_records.each do |pokemon|
 			found = "no"
 			# Iterate over each trait of each of those Pokemon
 			pokemon.each do |trait| 
@@ -108,6 +105,35 @@ class PokedexFind < Pokedex
 		return results_array
 	end
 
+	def list_of_favorites()
+		# all_records contains complete list of Pokemon as an Array
+		# all_records = Pokedex.pokedex_all_records(file)
+		# Will contain all the favorite Pokemon
+		favorite_pokemon = []
+		# Iterate through each Pokemon
+		@all_records.each do |pokemon|
+			# Check if the Pokemon is a favorite
+			if pokemon[6] == "on"
+				# If so then add the Pokemon to Array
+				favorite_pokemon.push(pokemon)
+			end
+		end
+		return favorite_pokemon
+	end
+
+	# This method selects a favorite randomly to be displayed on the home page
+	#
+	# favorite_pokemon = Array of favorited Pokemon returned from pokedex_list_of_favorites
+	#
+	# RETURNS ARRAY
+	def random_favorite()
+		# all_records is the Array of all the Pokemon in the Pokedex
+		# favorite_pokemon is the Array of favorited Pokemon
+		favorite_pokemon = list_of_favorites()
+		# Select a random Pokemon from the favorites Array
+		random_favorite = favorite_pokemon.sample
+		return random_favorite
+	end
 
 
 
