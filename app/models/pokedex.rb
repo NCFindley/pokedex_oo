@@ -86,7 +86,7 @@ class PokedexFind < Pokedex
 	# pokemon_array represents all Pokemon in the Pokedex
 	#
 	# RETURNS ARRAY
-	def Pokedex.pokedex_find_by_trait(search_input)
+	def find_by_trait(search_input)
 		results_array = []
 		# Iterate over each of the Pokemon in the Pokedex
 		@all_records.each do |pokemon|
@@ -157,12 +157,83 @@ class PokedexFind < Pokedex
 	#
 	# RETURNS ARRAY (OF HASHES)
 
+	def new_aray(gender,cp,hp,favorite)
 
-	def Pokedex.change_the_arrays(all_as_arrays)
+		@new_pokemonarray = []
+		@new_pokemonarray << @name.capitalize
+		@new_pokemonarray << height()
+		@new_pokemonarray << weight()
+		@new_pokemonarray << gender
+		@new_pokemonarray << cp
+		@new_pokemonarray << hp
+		@new_pokemonarray << favorite
+		@new_pokemonarray << @stage1
+		@new_pokemonarray << @stage2
+		@new_pokemonarray << @stage3
+
+		return @new_pokemonarray
+
+	end
+end
+
+
+class InternalAPI
+
+	def initialize (all_records)
+
+		@all_records = all_records
+
+
+	end
+
+	# This method adds evolution stages to a Hash for API storage
+	# 
+	# all_pokemon = Pokedex.all_records
+	#
+	# RETURNS A HASH
+	def evolution_hash()
+		evolutions_hash = {}	
+
+			evolutions_hash["stage1"] = all_pokemon[7]
+			evolutions_hash["stage2"] = all_pokemon[8]
+			evolutions_hash["stage3"] = all_pokemon[9]
+		return evolutions_hash
+	end
+
+	# This method adds types to a Hash for API storage
+	# 
+	# types_array = types(pokemon)
+	#
+	# RETURNS A HASH
+	def types_hash(types_array)
+		types_hash = {}
+			types_hash["type1"] = types_array[0]
+			types_hash["type2"] = types_array[1]
+			types_hash["type3"] = types_array[2]
+		return types_hash
+	end
+
+	# This method takes the sorted data taken from the API request and puts it into a Hash
+	#
+	# RETURNS A HASH
+	def data_hash(name, height, weight, ability_hash, types_hash, evolutions_hash)
+		data_hash = {}
+		
+			data_hash["name"] = name
+			data_hash["height"] = height
+			data_hash["weight"] = weight
+			data_hash["types"] = [types_hash]
+			data_hash["abilities"] = [ability_hash]
+			data_hash["evolutions"] = [evolutions_hash]
+
+		return data_hash
+	end
+
+	def change_the_arrays()
 		new_hash = {}
 		new_array = []
 
-			all_as_arrays.each do |pokemon|
+			@all_records.each do |pokemon|
 
 				new_hash["name"] = pokemon[0]
 				new_hash["height"] = pokemon[1]
@@ -182,9 +253,7 @@ class PokedexFind < Pokedex
 		return new_array
 	end
 
-	# array_hash = Pokedex.change_the_arrays(all_as_arrays)
-	# given_name = name passed into url
-	def Pokedex.return_specific_hash(array_hash, given_name)
+	def return_specific_hash(array_hash, given_name)
 		single_pokemon = []
 		array_hash.each do |hsh|
 			if hsh["name"] == given_name
