@@ -70,7 +70,7 @@ require 'active_support/all'
 
 		end
 		@pokedex = Pokedex.new(@file)
-		@pokedex.pokedex_all_records()
+		@pokedex.all_records()
 		@pokedex.delete_record(@name)
 		@pokedex.save_record(@new_pokemonarray)
 
@@ -78,7 +78,7 @@ require 'active_support/all'
 
 
 		@pokedex = Pokedex.new(@file)
-		@all_pokemon = @pokedex.pokedex_all_records()
+		@all_pokemon = @pokedex.all_records()
 		@pokedexFind = PokedexFind.new(@file,@all_pokemon)
 		
 		@found_array = @pokedexFind.find_record(@name)

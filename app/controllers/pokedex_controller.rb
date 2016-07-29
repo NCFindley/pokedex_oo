@@ -4,8 +4,7 @@ MyApp.get "/" do
 
 	@file = 'Data_File/pokedex.csv'
 	@pokedex = Pokedex.new(@file)
-	@all_pokemon= @pokedex.pokedex_all_records()
-	# @all_pokemon = Pokedex.pokedex_all_records(@file)
+	@all_pokemon= @pokedex.all_records()
 	@pokedexFind = PokedexFind.new(@file,@all_pokemon)
 	@random_favorite = @pokedexFind.random_favorite()
 	@no_pokemon_error = "Visit the Add Pokemon page to start building your Pokedex"

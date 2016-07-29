@@ -27,7 +27,7 @@ class Pokedex
 		end
 	end
 
-	def pokedex_all_records()
+	def all_records()
 		
 		# Array to add all Pokemon to
 		@pokemon_array = []
