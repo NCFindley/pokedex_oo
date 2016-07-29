@@ -4,7 +4,6 @@ Pichu,3,20,Female,58,178,on,Pichu,Pikachu,Raichu,Electric
 Blastoise,16,855,Male,500,898,on,Squirtle,Wartortle,Blastoise,Water
 Kadabra,13,565,Male,938,848,on,Abra,Kadabra,Alakazam
 Oddish,5,54,Female,77,34,on,Oddish,Gloom,Vileplume,Poison,Grass
-Dragonair,40,165,Female,899,84,on,Dratini,Dragonair,Dragonite,Dragon
 Charizard,17,905,Male,3848,3994,on,Charmander,Charmeleon,Charizard,Flying,Fire
 Alakazam,15,480,Male,588,348,on,Abra,Kadabra,Alakazam,Psychic
 Bulbasaur,7,69,Male,68,74,on,Bulbasaur,Ivysaur,Venusaur,Poison,Grass
@@ -23,4 +22,5 @@ Munchlax,6,1050,Male,33,34,,Munchlax,Snorlax,None,Normal
 Totodile,6,95,Female,399,84,on,Totodile,Croconaw,Feraligatr,Water
 Cyndaquil,5,79,Male,28,78,on,Cyndaquil,Quilava,Typhlosion,Fire
 Haunter,16,1,Male,300,500,,Gastly,Haunter,Gengar,Poison,Ghost
-Charmander,6,85,male,30,40,,Charmander,Charmeleon,Charizard,Fire
+Dragonair,40,165,Female,899,84,on,Dratini,Dragonair,Dragonite,Dragon
+Charmander,6,85,male,40,30000,on,Charmander,Charmeleon,Charizard,Fire

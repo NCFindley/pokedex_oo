@@ -35,7 +35,7 @@ require 'active_support/all'
 		@evolution_id = @pokeapi.evolution_id()
 		# Finally use the evolution ID to get the information about the Pokemon's evolution chain
 		@evolutions = HTTParty.get("http://pokeapi.co/api/v2/evolution-chain/#{@evolution_id}")
-		@evolution_array = @pokeapi.api_evolution_array(@evolutions)
+		@evolution_array = @pokeapi.evolution_array(@evolutions)
 
 		@stage1 = @evolution_array[0].capitalize
 		@stage2 = @evolution_array[1].capitalize
