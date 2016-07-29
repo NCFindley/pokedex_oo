@@ -73,6 +73,40 @@ require 'active_support/all'
 		@pokedex.pokedex_all_records()
 		@pokedex.delete_record(@name)
 		@pokedex.save_record(@new_pokemonarray)
+
+	elsif params[:name].present? != false
+
+
+		@pokedex = Pokedex.new(@file)
+		@pokedex.pokedex_all_records()
+		@pokedexFind = PokedexFind.new(@file,@all_pokemon)
+		
+		@found_array = @pokedexFind.find_record(@name)
+
+		if @found_array != false
+
+			@height = @found_array[1].to_f / 10 * 3.28
+			@height = @height.round(2)
+			@weight = @found_array[2].to_i / 4.54
+			@weight = @weight.round(2)
+			@gender = @found_array[3]
+			@cp = @found_array[4]
+			@hp = @found_array[5]
+			@favorite = @found_array[6]
+			@stage1 = @found_array[7]
+			@stage2 = @found_array[8]
+			@stage3 = @found_array[9]
+			@type = @pokedex.display_type(@found_array)
+	
+		else
+			@name = "No Pokemon Found"
+		end
+	end
+
+	if @favorite == "on"
+		@favorite = "yes"
+	else
+		@favorite = "no"
 	end
 
 	erb :"pokedex/view"

@@ -66,7 +66,7 @@ class PokedexFind < Pokedex
 
 	end
 
-	def pokedex_find_record(name_pokemon)
+	def find_record(name_pokemon)
 
 
 		@all_records.each do |record|
