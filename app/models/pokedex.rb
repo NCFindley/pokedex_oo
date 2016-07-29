@@ -231,7 +231,7 @@ class InternalAPI
 
 	def change_the_arrays()
 		new_hash = {}
-		new_array = []
+		@change_array = []
 
 			@all_records.each do |pokemon|
 
@@ -248,15 +248,15 @@ class InternalAPI
 				new_hash["type1"] = pokemon[10]
 				new_hash["type2"] = pokemon[11]
 
-			  new_array.push(new_hash.dup)
+			  @change_array.push(new_hash.dup)
 			end	
-		return new_array
+		return @change_array
 	end
 
-	def return_specific_hash(array_hash, given_name)
+	def return_specific_hash(name)
 		single_pokemon = []
-		array_hash.each do |hsh|
-			if hsh["name"] == given_name
+		@change_array.each do |hsh|
+			if hsh["name"] == name
 				single_pokemon.push(hsh)
 			end
 		end

@@ -106,7 +106,7 @@ class Pokeapi
 	#
 	# RETURNS ARRAY with String Elements 
 
-	def api_evolution_array(pokemon_info)
+	def evolution_array(pokemon_info)
 
 
 		# firstevolution = pokemon_info["chain"]["species"]["name"]
@@ -148,62 +148,6 @@ class Pokeapi
 		
 		return evolutionarray
 
-	end
-
-
-	
-
-
-
-
-	# This method adds evolution stages to a Hash for API storage
-	# 
-	# all_pokemon = Pokedex.pokedex_all_records(file)
-	#
-	# RETURNS A HASH
-	def evolution_hash(all_pokemon)
-		evolutions_hash = {}	
-
-			evolutions_hash["stage1"] = all_pokemon[7]
-			evolutions_hash["stage2"] = all_pokemon[8]
-			evolutions_hash["stage3"] = all_pokemon[9]
-		return evolutions_hash
-	end
-
-	# This method adds types to a Hash for API storage
-	# 
-	# types_array = types(pokemon)
-	#
-	# RETURNS A HASH
-	def types_hash(types_array)
-		types_hash = {}
-			types_hash["type1"] = types_array[0]
-			types_hash["type2"] = types_array[1]
-			types_hash["type3"] = types_array[2]
-		return types_hash
-	end
-
-	# This method takes the sorted data taken from the API request and puts it into a Hash
-	#
-	# types_hash = types_hash(types_array)
-	# evolutions_hash = evolution_hash(evolution_array)
-	# ability_hash = ability_hash(abilities_array)
-	# height = height(pokemon)
-	# weight = weight(pokemon)
-	# name = params[:name]
-	#
-	# RETURNS A HASH
-	def api_data_hash(name, height, weight, ability_hash, types_hash, evolutions_hash)
-		data_hash = {}
-		
-			data_hash["name"] = name
-			data_hash["height"] = height
-			data_hash["weight"] = weight
-			data_hash["types"] = [types_hash]
-			data_hash["abilities"] = [ability_hash]
-			data_hash["evolutions"] = [evolutions_hash]
-
-		return data_hash
 	end
 
 end
